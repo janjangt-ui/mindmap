@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0f0e0c">
+<title>แผนผังความคิดแนวตั้ง — ความชอบด้วยกฎหมายในการใช้ดุลพินิจออกกฎและคำสั่งทางปกครอง</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f0e0c; --bg-soft:#171511; --panel:#1d1a15; --panel-2:#24201a;
+    --gold:#d4a843; --gold-soft:#b8923a; --gold-dim:#8a6f2e;
+    --ink:#ece6da; --ink-dim:#a89f8d; --ink-faint:#766d5c;
+    --line:#3a3329; --red:#c0563f; --green:#5b9d6b; --rail:#2c2720;
+    --blue:#7f8fb0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Sarabun',sans-serif;
+    background:radial-gradient(1200px 600px at 50% -200px,#1b1813 0%,transparent 60%),var(--bg);
+    color:var(--ink);line-height:1.7;padding:0 0 80px;-webkit-font-smoothing:antialiased;
+    padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
+    text-rendering:optimizeLegibility;overflow-x:hidden;
+  }
+
+  .hero{max-width:1080px;margin:0 auto;padding:calc(60px + env(safe-area-inset-top)) 28px 24px;text-align:center;}
+  .eyebrow{font-size:13px;letter-spacing:.35em;color:var(--gold-soft);text-transform:uppercase;font-weight:600;margin-bottom:18px;}
+  .hero h1{font-size:clamp(23px,4vw,36px);font-weight:700;line-height:1.35;color:var(--ink);max-width:880px;margin:0 auto;}
+  .hero h1 .hl{color:var(--gold)}
+  .case-chip{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 20px;border:1px solid var(--gold-dim);border-radius:40px;background:linear-gradient(180deg,#211d16,#191510);font-size:15px;color:var(--gold);font-weight:600;}
+  .case-chip small{color:var(--ink-dim);font-weight:400;font-size:13px}
+  .hero .sub{margin:22px auto 0;max-width:780px;color:var(--ink-dim);font-size:15.5px;}
+
+  .legend{max-width:1080px;margin:26px auto 0;padding:0 28px;display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;font-size:13px;color:var(--ink-faint);}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .dot.law{background:var(--gold)} .dot.case{background:var(--red)} .dot.doc{background:var(--green)} .dot.thesis{background:var(--blue)}
+
+  .topic{max-width:880px;margin:50px auto 0;padding:0 28px;}
+  .topic-head{display:flex;align-items:center;gap:16px;margin-bottom:6px;}
+  .topic-num{flex:none;width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font-size:20px;font-weight:700;color:#1a1610;background:linear-gradient(150deg,var(--gold),var(--gold-soft));box-shadow:0 8px 22px -10px var(--gold-dim);}
+  .topic-head h2{font-size:21px;font-weight:700;color:var(--ink);line-height:1.4}
+  .topic-head h2 small{display:block;font-size:13px;color:var(--gold-soft);font-weight:500;letter-spacing:.02em;margin-top:2px}
+
+  .tree{max-width:860px;margin:24px auto 0;position:relative;padding-top:6px;}
+  .tree::before{content:"";position:absolute;left:30px;top:8px;bottom:14px;width:2px;background:linear-gradient(180deg,var(--gold) 0%,var(--gold-dim) 14%,var(--rail) 100%);}
+
+  .node{position:relative;padding-left:62px;margin:14px 0;}
+  .node::before{content:"";position:absolute;left:30px;top:26px;width:30px;height:2px;background:var(--rail);}
+  .node::after{content:"";position:absolute;left:25px;top:21px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--gold-dim);}
+  .node.root::after{background:var(--gold);border-color:var(--gold);width:13px;height:13px;left:24px;top:20px}
+
+  .node-inner{background:linear-gradient(180deg,var(--panel),var(--bg-soft));border:1px solid var(--line);border-radius:13px;padding:18px 22px;box-shadow:0 10px 30px -20px #000;}
+  .node.root .node-inner{border-color:var(--gold-dim);background:linear-gradient(180deg,#241f17,#1a1610);box-shadow:0 0 0 1px rgba(212,168,67,.1),0 16px 44px -24px #000;}
+
+  .lvl{display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:8px;padding:3px 10px;border-radius:5px;}
+  .lvl.root{background:var(--gold);color:#1a1610}
+  .lvl.issue{background:rgba(212,168,67,.14);color:var(--gold);border:1px solid var(--gold-dim)}
+  .lvl.rule{background:rgba(192,86,63,.13);color:#e08066;border:1px solid #7a3d30}
+  .lvl.apply{background:rgba(91,157,107,.13);color:#82c193;border:1px solid #3c6347}
+
+  .node-inner h3{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:7px;line-height:1.5}
+  .node-inner h3 .num{color:var(--gold);font-weight:700;margin-left:2px}
+  .node-inner p{font-size:14px;color:var(--ink-dim);margin:6px 0}
+  .node-inner p .em{color:var(--ink);font-weight:600}
+
+  .cites{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+  a.cite{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-size:12px;font-weight:500;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);padding:6px 11px;border-radius:7px;transition:.18s ease;line-height:1.35;}
+  a.cite:hover{border-color:var(--gold);background:#2c271f}
+  a.cite .tag{font-size:9.5px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:4px;text-transform:uppercase;}
+  a.cite .tag.law{background:rgba(212,168,67,.18);color:var(--gold)}
+  a.cite .tag.case{background:rgba(192,86,63,.2);color:#e08066}
+  a.cite .tag.doc{background:rgba(91,157,107,.18);color:#82c193}
+  a.cite .tag.thesis{background:rgba(127,143,176,.2);color:#9fb0d0}
+  a.cite .ref{color:var(--ink-dim);font-weight:400}
+  a.cite .arrow{color:var(--gold);font-size:12px}
+
+  .ref-chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);padding:6px 11px;border-radius:7px;line-height:1.35;}
+  .ref-chip .tag{font-size:9.5px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:4px;text-transform:uppercase;}
+  .ref-chip .tag.book{background:rgba(127,143,176,.2);color:#9fb0d0}
+  .ref-chip .ref{color:var(--ink-dim);font-weight:400}
+
+  .src{margin-top:11px;padding:10px 14px;border-left:3px solid var(--gold-dim);background:rgba(212,168,67,.05);border-radius:0 8px 8px 0;font-size:12.5px;color:var(--ink-dim);}
+  .src b{color:var(--gold-soft);font-weight:600}
+  .src .line{color:var(--ink-faint);font-size:11.5px;margin-top:2px}
+
+  .branch{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+  .leaf{flex:1 1 280px;background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+  .leaf h4{font-size:14px;color:var(--gold);font-weight:600;margin-bottom:6px}
+  .leaf p{font-size:13px;color:var(--ink-dim);margin:4px 0}
+  .leaf .flag{font-size:12px;color:var(--ink-faint);font-style:italic}
+
+  .compare{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+  .nation{flex:1 1 300px;background:var(--bg-soft);border:1px solid var(--line);border-radius:11px;padding:15px 17px;}
+  .nation .flag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;padding:3px 11px;border-radius:6px;margin-bottom:9px;}
+  .nation.fr .flag{background:rgba(127,143,176,.18);color:#9fb0d0}
+  .nation.de .flag{background:rgba(212,168,67,.16);color:var(--gold)}
+  .nation h4{font-size:14.5px;color:var(--ink);font-weight:700;margin-bottom:6px;line-height:1.5}
+  .nation p{font-size:13px;color:var(--ink-dim);margin:4px 0}
+  .nation .term{color:var(--gold-soft);font-weight:600;font-style:italic}
+
+  .warn{max-width:780px;margin:46px auto 0;padding:14px 20px;border:1px dashed var(--gold-dim);border-radius:10px;background:rgba(212,168,67,.04);font-size:13px;color:var(--ink-dim);text-align:center;}
+  .warn b{color:var(--gold)}
+  .foot{max-width:880px;margin:34px auto 0;padding:22px 28px 0;border-top:1px solid var(--line);text-align:center;font-size:12.5px;color:var(--ink-faint);line-height:1.9;}
+  .foot b{color:var(--ink-dim)}
+
+  /* ============ RESPONSIVE — TABLET / iPad ============ */
+  @media (max-width: 820px){
+    .hero{padding:calc(46px + env(safe-area-inset-top)) 22px 20px;}
+    .topic,.tree{padding-left:20px;padding-right:20px;}
+    .leaf{flex:1 1 240px;}
+    .nation{flex:1 1 260px;}
+  }
+
+  /* ============ RESPONSIVE — PHONE / iPhone ============ */
+  @media (max-width: 560px){
+    body{line-height:1.65;}
+    .hero{padding:calc(34px + env(safe-area-inset-top)) 16px 16px;}
+    .hero h1{font-size:clamp(20px,6.2vw,26px);line-height:1.4;}
+    .eyebrow{font-size:11px;letter-spacing:.22em;margin-bottom:14px;}
+    .case-chip{flex-direction:column;gap:4px;padding:11px 18px;font-size:14px;text-align:center;border-radius:22px;}
+    .case-chip small{font-size:12px;}
+    .hero .sub{font-size:14px;margin-top:18px;}
+
+    .legend{gap:8px 16px;padding:0 16px;font-size:12px;}
+
+    .topic{margin-top:38px;padding:0 16px;}
+    .topic-head{gap:12px;}
+    .topic-num{width:40px;height:40px;font-size:17px;border-radius:10px;}
+    .topic-head h2{font-size:18px;}
+    .topic-head h2 small{font-size:12px;}
+
+    .tree{padding:0 14px;margin-top:20px;}
+    .tree::before{left:18px;}
+    .node{padding-left:44px;margin:12px 0;}
+    .node::before{left:18px;width:20px;}
+    .node::after{left:13px;}
+    .node.root::after{left:12px;}
+    .node-inner h3{font-size:16px;}
+    .node-inner p{font-size:13.5px;}
+
+    .cites{gap:7px;}
+    a.cite{font-size:11.5px;padding:7px 10px;width:100%;}
+    .ref-chip{font-size:11.5px;padding:7px 10px;width:100%;}
+    .branch{gap:10px;}
+    .leaf{flex:1 1 100%;padding:12px 14px;}
+    .compare{gap:10px;}
+    .nation{flex:1 1 100%;padding:13px 15px;}
+
+    .src{font-size:12px;padding:9px 12px;}
+    .warn{margin-top:36px;padding:13px 16px;font-size:12.5px;}
+    .foot{padding:20px 16px 0;font-size:12px;}
+  }
+
+  /* very small / older iPhone SE */
+  @media (max-width: 360px){
+    .hero h1{font-size:clamp(18px,6.5vw,22px);}
+    .topic-head h2{font-size:16.5px;}
+  }
+
+  @media print{
+    body{padding-bottom:0}
+    .topic{break-inside:auto}
+    .topic-head{break-after:avoid}
+    .node{break-inside:avoid}
+    .node-inner{break-inside:avoid}
+    a.cite{border-color:var(--line)}
+    .hero{padding-bottom:10px}
+  }
+  html{background:var(--bg)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">แผนผังความคิด · กฎหมายปกครอง · แนวตั้ง</div>
+  <h1>ความชอบด้วยกฎหมายในการใช้ <span class="hl">ดุลพินิจ</span> ออกกฎและคำสั่งทางปกครอง<br>กรณีคำสั่งนายทะเบียนไม่อนุญาตทำงาน + กฎหมายปกครองเปรียบเทียบ</h1>
+  <div class="case-chip">บรรทัดฐาน: คำพิพากษาศาลปกครองสูงสุดที่ ฟ.๑๕๒/๒๕๖๘<small>เชื่อมโยงกฎหมายปกครองเปรียบเทียบ ฝรั่งเศส–เยอรมนี (อ.ต่อพงศ์)</small></div>
+  <p class="sub">วิเคราะห์ปัญหาความชอบด้วยกฎหมายของ “คำสั่งนายทะเบียนไม่อนุญาตทำงาน” → วางโครงสร้างหลักความชอบด้วยกฎหมาย เทียบเคียงระบบฝรั่งเศส–เยอรมนี → ยึดบรรทัดฐานจาก ฟ.๑๕๒/๒๕๖๘ — แบ่งเป็น ๓ ประเด็นหลัก</p>
+</header>
+
+<div class="legend">
+  <span><i class="dot law"></i> ตัวบทกฎหมาย/ฐานอำนาจ</span>
+  <span><i class="dot case"></i> คำพิพากษา/แนวคำวินิจฉัย</span>
+  <span><i class="dot doc"></i> ประกาศ/กฎลำดับรอง</span>
+  <span><i class="dot thesis"></i> ตำรา/กฎหมายเปรียบเทียบ</span>
+</div>
+
+<!-- ============ TOPIC 1 ============ -->
+<section class="topic">
+  <div class="topic-head">
+    <div class="topic-num">๑</div>
+    <h2>วิเคราะห์ความชอบด้วยกฎหมายของ “คำสั่งนายทะเบียนไม่อนุญาตทำงาน”<small>ฐานอำนาจ · การให้เหตุผล · ข้อโต้แย้งตีกลับ</small></h2>
+  </div>
+  <div class="tree">
+
+    <div class="node root">
+      <div class="node-inner">
+        <span class="lvl root">แก่น · ฐานอำนาจ</span>
+        <h3>คำสั่งทางปกครองที่ถูกต้องต้องใช้ฐานอำนาจจากกฎหมายทั้งสองฉบับประกอบกัน แต่ใช้ในหน้าที่ต่างกัน</h3>
+        <p>ต้องแยก <span class="em">ฐานอำนาจทางเนื้อหา</span> (Substantive Law) ออกจาก <span class="em">ฐานอำนาจทางขั้นตอนและกระบวนการ</span> (Procedural Law) — ทั้งสองทำหน้าที่คนละส่วนแต่ต้องครบจึงจะออกคำสั่งโดยชอบได้</p>
+        <div class="branch">
+          <div class="leaf"><h4>ฐานอำนาจทางเนื้อหา</h4><p>ใช้ “ประกาศกระทรวงแรงงาน” เป็นฐานพิจารณาเงื่อนไข สิทธิ หรือลักษณะต้องห้ามของคนต่างด้าว</p></div>
+          <div class="leaf"><h4>ฐานอำนาจทางขั้นตอน</h4><p>ใช้ “กฎกระทรวงฯ ปี ๒๕๖๓” โดยเฉพาะ <span class="em">ข้อ ๖ วรรคสอง</span> — สั่งไม่อนุญาตต้องทำเป็นหนังสือ ระบุเหตุผล และแจ้งสิทธิอุทธรณ์ภายใน ๗ วัน</p></div>
+        </div>
+        <div class="src"><b>ข้อมูลที่ ๑</b> · หน้า ๑–๒ ประเด็น ๑.๑ การประเมินข้อโต้แย้งเรื่อง “ฐานอำนาจ” ในการออกคำสั่ง</div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl issue">ประเด็นย่อย · ฐานอำนาจไม่สมบูรณ์</span>
+        <h3>การอ้างเพียง “มาตรา ๖๓/๒” แห่ง พ.ร.ก.ฯ เป็นการอ้างฐานอำนาจที่ไม่สมบูรณ์</h3>
+        <p>เพราะมาตราดังกล่าวเป็นเพียงบทบัญญัติที่ให้อำนาจ <span class="em">ครม.</span> กำหนดกลุ่มคนต่างด้าว มิใช่ฐานอำนาจในการสั่งไม่อนุญาตเฉพาะรายโดยตรง</p>
+        <div class="src"><b>ข้อมูลที่ ๑</b> · หน้า ๒ — มาตรา ๖๓/๒ ให้อำนาจ ครม. กำหนดกลุ่มคนต่างด้าว</div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl rule">ประเด็นย่อย · ผิดฝาผิดตัว</span>
+        <h3>การให้เหตุผลประกอบคำสั่งและการปรับใช้กฎหมายผิดประเภท</h3>
+        <p>คำสั่งทางปกครองต้องประกอบด้วย ๓ ส่วนหลักตาม พ.ร.บ.วิธีปฏิบัติราชการทางปกครอง คือ (๑) ข้อเท็จจริงอันเป็นสาระสำคัญ (๒) ข้อกฎหมายที่อ้างอิง และ (๓) ข้อพิจารณาในการใช้ดุลพินิจ</p>
+        <p>การที่นายทะเบียนอ้างเหตุ “ไม่มีสถานประกอบการ” โดยอิงข้อ ๑๓ ของประกาศฯ ซึ่งแท้จริงเป็นเรื่อง <span class="em">“เหตุสิ้นสุดของกฎ”</span> นำมาปะปนกับเหตุออก “คำสั่งทางปกครอง” จึงเป็นการปรับใช้กฎหมายผิดฝาผิดตัว</p>
+        <div class="src"><b>ข้อมูลที่ ๑</b> · หน้า ๒ ประเด็น ๑.๒ การให้เหตุผลประกอบคำสั่งและการปรับใช้กฎหมายผิดประเภท</div>
+        <div class="cites">
+          <a class="cite" href="https://www.krisdika.go.th/librarian/get?sysid=443538&ext=pdf" target="_blank" rel="noopener"><span class="tag law">พ.ร.บ.</span> <span class="ref">วิธีปฏิบัติราชการทางปกครอง พ.ศ. ๒๕๓๙ — ม.๓๗</span> <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl rule">ประเด็นย่อย · ข้อโต้แย้งตีกลับ (Backfire)</span>
+        <h3>การอ้างประกาศกระทรวงแรงงาน ๒ ฉบับเป็นฐานอำนาจ ยิ่งส่งผลเสียต่อนายทะเบียนเอง</h3>
+        <p>เพราะในประกาศดังกล่าว <span class="em">ไม่ได้ระบุลักษณะต้องห้ามเรื่อง “ไม่มีสถานประกอบการ” ไว้เลย</span> — การนำมาอ้างจึงเป็นการใช้ดุลพินิจที่ไม่มีกฎหมายรองรับ</p>
+        <div class="src"><b>ข้อมูลที่ ๑</b> · หน้า ๒ ประเด็น ๑.๓ ข้อโต้แย้งตีกลับต่อตัวนายทะเบียน</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ TOPIC 2 ============ -->
+<section class="topic">
+  <div class="topic-head">
+    <div class="topic-num">๒</div>
+    <h2>โครงสร้างหลักความชอบด้วยกฎหมาย และกฎหมายปกครองเปรียบเทียบ<small>ฝรั่งเศส–เยอรมนี (อ.ต่อพงศ์) · แยกประเภทนิติกรรม · เงื่อนไขรับฟ้อง · ฐานอำนาจ</small></h2>
+  </div>
+  <div class="tree">
+
+    <div class="node root">
+      <div class="node-inner">
+        <span class="lvl root">แก่น · หลักดุลพินิจออกกฎ</span>
+        <h3>การใช้อำนาจดุลพินิจของฝ่ายปกครองต้องอยู่ภายใน “กรอบวัตถุประสงค์ของกฎหมาย”</h3>
+        <p>หากออกกฎเพื่อรักษา “ประโยชน์สาธารณะด้านอื่น” ที่กฎหมายไม่ได้มุ่งคุ้มครอง (เช่น กระตุ้นการท่องเที่ยว หรือเอื้อประโยชน์ธุรกิจเอกชน แทนความมั่นคงของชาติ) ถือว่า <span class="em">ดุลพินิจมิชอบ</span></p>
+        <div class="src"><b>ข้อมูลที่ ๒</b> · หน้า ๓ ประเด็น ๒.๑ หลักความชอบด้วยกฎหมายในการใช้ดุลพินิจออกกฎ</div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl issue">ประเด็นย่อย ๒.๑ · ใช้ดุลพินิจโดยมิชอบ (เปรียบเทียบ)</span>
+        <h3>หลักการใช้ดุลพินิจโดยไม่ชอบ / การบิดเบือนอำนาจ</h3>
+        <div class="compare">
+          <div class="nation fr">
+            <span class="flag">ฝรั่งเศส</span>
+            <h4><span class="term">détournement de pouvoir</span> (การบิดเบือนอำนาจ)</h4>
+            <p>ฝ่ายปกครองใช้อำนาจที่มีอยู่จริง แต่ใช้ไปเพื่อวัตถุประสงค์อื่นที่มิใช่วัตถุประสงค์ที่กฎหมายมอบอำนาจให้</p>
+            <p>สภาแห่งรัฐ (Conseil d'État) ก่อตั้งหลักนี้ตั้งแต่ ค.ศ. ๑๘๗๒ เพื่อตรวจสอบ “เจตนา/แรงจูงใจ (mobil)” ที่ซ่อนเร้น</p>
+          </div>
+          <div class="nation de">
+            <span class="flag">เยอรมนี</span>
+            <h4><span class="term">Ermessensfehler</span> / <span class="term">Ermessensmissbrauch</span></h4>
+            <p>ความบกพร่องของการใช้ดุลพินิจตาม ม.๑๑๔ VwGO แบ่งเป็น ภาวะวิสัย (เกินขอบเขต / ไม่ใช้ดุลพินิจ) และ อัตวิสัย (ใช้ดุลพินิจโดยบิดเบือน)</p>
+            <p>“การใช้ดุลพินิจโดยบิดเบือน” เทียบเคียงได้กับ détournement de pouvoir ของฝรั่งเศส</p>
+          </div>
+        </div>
+        <div class="src"><b>ข้อมูลที่ ๒</b> · กฎหมายปกครองเปรียบเทียบ ภาค ๓ บทที่ ๒ หน้า ๓๙๘–๔๐๑ (หัวข้อ ๒.๑.๒.๕.๓ การใช้ดุลพินิจโดยไม่ชอบ)<div class="line">อ้างอิงไฟล์ “2.6.pdf24_merged.pdf”</div></div>
+        <div class="cites">
+          <span class="ref-chip"><span class="tag book">ตำรา</span> <span class="ref">กฎหมายปกครองเปรียบเทียบ : ฝรั่งเศสและเยอรมนี (อ.ต่อพงศ์) หน้า ๓๙๘–๔๐๑</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl issue">ประเด็นย่อย ๒.๒ · แยกประเภทนิติกรรมทางปกครอง</span>
+        <h3>“ประกาศกระทรวงแรงงาน” = กฎ (Rule) · “คำสั่งนายทะเบียนไม่อนุญาต” = คำสั่งทางปกครอง (Administrative Order)</h3>
+        <div class="compare">
+          <div class="nation fr">
+            <span class="flag">ฝรั่งเศส</span>
+            <h4>นิติกรรมทางปกครอง <span class="term">(acte administratif)</span></h4>
+            <p>มิได้บัญญัตินิยามชัดเจน — ศาล (Conseil d'État) สร้างขึ้นโดยแนวคำพิพากษา เพื่อชี้ขาดว่าการใช้อำนาจใดถูกตรวจสอบความชอบด้วยกฎหมายได้</p>
+            <p>องค์ประกอบสำคัญ ๒ ประการ: (๑) ใช้อำนาจฝ่ายเดียวโดยเอกชนไม่ต้องยินยอม (๒) มีผลทางกฎหมายกำหนดสิทธิ/หน้าที่ (Pierre Delvolvé)</p>
+          </div>
+          <div class="nation de">
+            <span class="flag">เยอรมนี</span>
+            <h4>คำสั่งทางปกครอง <span class="term">(Verwaltungsakt)</span></h4>
+            <p>เป็นการใช้อำนาจรัฐในทางมหาชนเพื่อจัดการกับกรณีเฉพาะเรื่อง — นิยามตาม ม.๓๕ VwVfG (ค.ศ. ๑๙๗๖) รับมาจากตำราของ Otto Mayer (ค.ศ. ๑๘๙๕–๙๖)</p>
+            <p>เป็นสะพานประนีประนอมระหว่างรัฐตำรวจ (Polizeistaat) กับนิติรัฐ (Rechtsstaat)</p>
+          </div>
+        </div>
+        <div class="src"><b>ข้อมูลที่ ๒</b> · ฝรั่งเศส หน้า ๑๙๗, ๒๐๐ (ไฟล์ 2.1) · เยอรมนี หน้า ๒๗๗ ตำรา Otto Mayer (ไฟล์ 2.4)</div>
+        <div class="cites">
+          <span class="ref-chip"><span class="tag book">ตำรา</span> <span class="ref">กฎหมายปกครองเปรียบเทียบฯ ภาค ๒ — acte administratif / Verwaltungsakt</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl rule">ประเด็นย่อย ๒.๓ · เงื่อนไขการรับฟ้องคดีปกครอง</span>
+        <h3>ฟ้องเพิกถอน “กฎ” ฟ้องศาลปกครองสูงสุดได้โดยตรง · ฟ้องเพิกถอน “คำสั่ง” ต้องอุทธรณ์ภายในให้ครบก่อน</h3>
+        <p>การฟ้องต้องครบเงื่อนไข “ผู้ได้รับความเดือดร้อนเสียหาย”</p>
+        <div class="compare">
+          <div class="nation fr">
+            <span class="flag">ฝรั่งเศส</span>
+            <h4>คำฟ้องเพิกถอนนิติกรรมทางปกครอง <span class="term">(recours pour excès de pouvoir)</span></h4>
+            <p>พิจารณาแบบภาวะวิสัย มุ่งตรวจ “ตัวนิติกรรม” ว่าเกินอำนาจ (ultra vires) หรือไม่ — ต่างจาก contentieux de pleine juridiction ที่ศาลมีอำนาจเต็มถึงขั้นสั่งเยียวยา</p>
+            <p>เงื่อนไขรับฟ้อง ๔ ประการ (Édouard Laferrière): วัตถุแห่งคดี · ความสามารถ · อำนาจฟ้อง (intérêt) · ไม่มีคำฟ้องประเภทอื่นทดแทน</p>
+          </div>
+          <div class="nation de">
+            <span class="flag">เยอรมนี</span>
+            <h4>คำฟ้องเพิกถอนคำสั่งทางปกครอง <span class="term">(Anfechtungsklage)</span></h4>
+            <p>ตาม ม.๔๒ VwGO — เป็นคำฟ้องหลักเพื่อขอเพิกถอนคำสั่งที่ไม่ชอบด้วยกฎหมาย</p>
+            <p>มุ่งสู่การคุ้มครองสิทธิอย่างมีประสิทธิภาพ (Effektiver Rechtsschutz) และไร้ช่องว่าง (Lückenloser Rechtsschutz)</p>
+          </div>
+        </div>
+        <div class="src"><b>ข้อมูลที่ ๒</b> · ฝรั่งเศส หน้า ๓๖๑, ๓๘๑ · เยอรมนี หน้า ๔๔๒ (ม.๔๒ VwGO)</div>
+        <div class="cites">
+          <a class="cite" href="https://www.admincourt.go.th/admincourt/site/09about_court_law.html" target="_blank" rel="noopener"><span class="tag law">พ.ร.บ.</span> <span class="ref">จัดตั้งศาลปกครองฯ ๒๕๔๒ — เงื่อนไขผู้มีสิทธิฟ้อง</span> <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl rule">ประเด็นย่อย ๒.๔ · ฐานอำนาจและการมอบอำนาจ</span>
+        <h3>อำนาจออกกฎเป็นของรัฐมนตรีโดยตรง — แยก “มอบอำนาจ” ออกจาก “มอบหมาย”</h3>
+        <p>อาศัย พ.ร.บ.ระเบียบบริหารราชการแผ่นดินฯ ประกอบ พ.ร.ก.ฯ</p>
+        <div class="branch">
+          <div class="leaf"><h4>มอบอำนาจ (Delegation)</h4><p>การโอนอำนาจทางกฎหมายให้ผู้รับใช้แทนในนามตน — ต้องทำเป็นหนังสือและมีฐานกฎหมายรองรับ</p></div>
+          <div class="leaf"><h4>มอบหมาย (Assignment)</h4><p>การสั่งการภายในเชิงบริหาร ความรับผิดยังอยู่ที่ผู้มอบหมาย — มิใช่การโอนอำนาจทางกฎหมาย</p></div>
+        </div>
+        <div class="src"><b>ข้อมูลที่ ๒</b> · หน้า ๑๑ ประเด็น ๒.๔ ฐานอำนาจและการมอบอำนาจ</div>
+        <div class="cites">
+          <a class="cite" href="https://www.ratchakitcha.soc.go.th/DATA/PDF/2560/A/065/1.PDF" target="_blank" rel="noopener"><span class="tag law">พ.ร.ก.</span> <span class="ref">การบริหารจัดการการทำงานของคนต่างด้าว พ.ศ. ๒๕๖๐</span> <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ TOPIC 3 ============ -->
+<section class="topic">
+  <div class="topic-head">
+    <div class="topic-num">๓</div>
+    <h2>บรรทัดฐานจากคำพิพากษาศาลปกครองสูงสุดที่ ฟ.๑๕๒/๒๕๖๘<small>กรณีประกาศอนุญาตคนต่างด้าวเป็นนักบินด้วยวิธี Wet Lease</small></h2>
+  </div>
+  <div class="tree">
+
+    <div class="node root">
+      <div class="node-inner">
+        <span class="lvl root">แก่น · ประเด็นแห่งคดี</span>
+        <h3>การที่กระทรวงแรงงานออกประกาศอนุญาตให้คนต่างด้าวเข้ามาทำงานเป็นผู้ประจำหน้าที่นักบินด้วยวิธีเช่าพร้อมผู้ประจำหน้าที่ (Wet Lease) เป็นการกระทำที่ชอบด้วยกฎหมายหรือไม่</h3>
+        <p>เป็นกรณีตัวอย่างของการตรวจสอบ <span class="em">การใช้ดุลพินิจออกกฎ</span> ว่าอยู่ในกรอบวัตถุประสงค์ของกฎหมายหรือไม่</p>
+        <div class="src"><b>ข้อมูลที่ ๒</b> · หน้า ๑๑–๑๒ — อ้างอิงไฟล์ “ฟ.152/2568.พรก.ต่างด้าว”</div>
+        <div class="cites">
+          <a class="cite" href="https://www.isranews.org/article/isranews-news/143242-Supreme-Administrative-Court-Revocation-of-the-Notification-news.html" target="_blank" rel="noopener"><span class="tag case">คดี</span> <span class="ref">ฟ.๑๕๒/๒๕๖๘ — ศาลปกครองสูงสุดเพิกถอนประกาศ</span> <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl rule">คำวินิจฉัย · หน้า ๑๖ บรรทัด ๖–๑๐, ๒๐–๒๔</span>
+        <h3>มาตรา ๑๔ ให้อำนาจยกเว้นเฉพาะกรณีที่ “จำเป็นเพื่อความมั่นคงหรือเศรษฐกิจของประเทศ”</h3>
+        <p>การออกประกาศเพื่อตอบสนองนโยบายรัฐบาลในการ <span class="em">กระตุ้นการท่องเที่ยว ไม่ใช่กรณีที่มีความจำเป็นถึงขนาดต้องยกเว้นตามกฎหมาย</span></p>
+        <div class="src"><b>ข้อมูลที่ ๒</b> · หน้า ๑๖ บรรทัดที่ ๖–๑๐ และ ๒๐–๒๔</div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-inner">
+        <span class="lvl rule">คำวินิจฉัย · หน้า ๑๗ บรรทัด ๑๖–๒๑</span>
+        <h3>การเปิด Wet Lease กระทบความมั่นคงของชาติ + โอกาสประกอบอาชีพของคนไทย → “การกระทำที่ไม่ชอบด้วยกฎหมาย”</h3>
+        <p>ส่งผลกระทบต่อความมั่นคงของชาติ โอกาสในการประกอบอาชีพของคนไทย และกระทบต่อนักบินไทยที่ยังว่างงานอยู่เป็นจำนวนมาก — การใช้ดุลพินิจในการออกประกาศที่พิพาทจึงเป็น <span class="em">การกระทำที่ไม่ชอบด้วยกฎหมาย</span></p>
+        <div class="src"><b>ข้อมูลที่ ๒</b> · หน้า ๑๗ บรรทัดที่ ๑๖–๒๑</div>
+        <div class="cites">
+          <a class="cite" href="https://www.matichon.co.th/local/crime/news_5461282" target="_blank" rel="noopener"><span class="tag case">คดี</span> <span class="ref">ฟ.๑๕๒/๒๕๖๘ — สมาคมนักบินไทย กับ ก.แรงงาน</span> <span class="arrow">↗</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="warn">
+  <b>หมายเหตุการอ้างอิง:</b> เลขหน้าตำรา “กฎหมายปกครองเปรียบเทียบ : ฝรั่งเศสและเยอรมนี (อ.ต่อพงศ์)” และเลขหน้า/บรรทัดของคำพิพากษา ฟ.๑๕๒/๒๕๖๘ อ้างตามไฟล์ต้นฉบับในข้อมูลที่ ๒ · ลิงก์คำพิพากษาชี้รายงานข่าวที่อ้างถ้อยคำคำวินิจฉัย เนื่องจากต้นฉบับฉบับเต็มยังมิได้เผยแพร่บนเว็บศาลปกครอง — เมื่อได้ไฟล์ฉบับเต็มควรเปลี่ยนเป็นลิงก์ต้นฉบับ
+</div>
+
+<footer class="foot">
+  <p><b>โครงสร้าง ๓ ประเด็น:</b> ๑ วิเคราะห์ความชอบด้วยกฎหมายของคำสั่งไม่อนุญาต → ๒ โครงสร้างหลักความชอบฯ + กฎหมายเปรียบเทียบ ฝรั่งเศส–เยอรมนี → ๓ บรรทัดฐาน ฟ.๑๕๒/๒๕๖๘</p>
+  <p>ใช้ได้บน iPhone / iPad / Mac / จอรถยนต์ — รองรับ safe-area และจอแนวกว้าง · จัดทำตามรูปแบบแผนผังแนวตั้ง โทนดำ–ทอง · Surachet Aiamlaor Legal AI Consultancy</p>
+</footer>
+
+</body>
+</html>
